@@ -1,4 +1,4 @@
-.breadcrumb {
+/* .breadcrumb {
   display: flex;
   overflow: auto hidden;
   flex-direction: row;
@@ -13,9 +13,8 @@ nav {
 .breadcrumb > div {
   display: block;
   white-space: nowrap;
-  /* padding-left: 15px; */
-  /* border-right: 10px solid red; */
-}
+  border-right: 10px solid red;
+} */
 /* 
 .breadcrumb.flexible {
   flex-wrap: nowrap;
