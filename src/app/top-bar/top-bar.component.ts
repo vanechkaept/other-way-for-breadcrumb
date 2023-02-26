@@ -55,9 +55,9 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
     const breadcrumb = this.breadcrumbLinks.slice();
     const breadcrumbWidth = this.getBreadcrumbWidth();
     let visibleWidth = 0;
+    this.hiddenItems = [];
 
     this.visibleItems = [];
-    this.hiddenItems = [];
 
     while (breadcrumb.length > 0) {
       const item = breadcrumb.shift();
