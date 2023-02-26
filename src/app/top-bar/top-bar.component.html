@@ -1,14 +1,20 @@
-<div class="breadcrumb-container" #breadcrumbContainer>
-  <a *ngFor="let breadcrumbLink of visibleLinks">{{ breadcrumbLink.label }}</a>
-  <!-- <div class="breadcrumb-more" *ngIf="hiddenLinks.length > 0">
-    <button mat-icon-button [matMenuTriggerFor]="moreMenu">
+<div class="breadcrumb">
+  <div class="breadcrumb__item" *ngFor="let item of visibleItems">
+    <a *ngIf="item.url" [routerLink]="item.url">{{ item.label }}</a>
+    <span *ngIf="!item.url">{{ item.label }}</span>
+  </div>
+  <div class="breadcrumb__more" *ngIf="hiddenItems.length > 0">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_horiz</mat-icon>
     </button>
-    <mat-menu #moreMenu="matMenu">
-      <button mat-menu-item *ngFor="let breadcrumbLink of hiddenLinks" [href]="breadcrumbLink.url">{{breadcrumbLink.label}}</button>
+    <mat-menu #menu="matMenu">
+      <button
+        mat-menu-item
+        *ngFor="let item of hiddenItems"
+        [routerLink]="item.url"
+      >
+        {{ item.label }}
+      </button>
     </mat-menu>
-  </div> -->
-  <button *ngFor="let breadcrumbLink of hiddenLinks">
-    {{ breadcrumbLink.label }}
-  </button>
+  </div>
 </div>
