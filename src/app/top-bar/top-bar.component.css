@@ -1,0 +1,35 @@
+.breadcrumb {
+  display: flex;
+  overflow: auto hidden;
+  flex-direction: row;
+}
+
+nav {
+  margin: 20px;
+  border: 1px solid red;
+  max-width: 350px;
+}
+
+.breadcrumb > div {
+  display: block;
+  white-space: nowrap;
+  /* padding-left: 15px; */
+  /* border-right: 10px solid red; */
+}
+/* 
+.breadcrumb.flexible {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.breadcrumb-item {
+  padding: 0 10px;
+  background-color: rgba(8, 8, 8, 0.158);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hidden {
+  display: none;
+} */
