@@ -34,58 +34,60 @@ interface BreadcrumbLink {
   styleUrls: ['./top-bar.component.css'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class BreadcrumbComponent implements OnInit, OnDestroy {
+export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
   @Input() breadcrumbLinks = BR;
 
-  visibleItems: BreadcrumbLink[] = [];
-  hiddenItems: BreadcrumbLink[] = [];
+  @ViewChild('breadcrumbContainer', { static: true })
+  breadcrumbContainer: ElementRef;
+
+  private resizeSubscription: Subscription;
+
+  visibleLinks: BreadcrumbLink[] = [];
+  hiddenLinks: BreadcrumbLink[] = [];
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.updateBreadcrumb();
-    window.addEventListener('resize', this.updateBreadcrumb.bind(this));
+  ngAfterViewInit(): void {
+    this.resizeSubscription = fromEvent(window, 'resize')
+      .pipe(debounceTime(100), distinctUntilChanged())
+      .subscribe(() => this.handleResize());
+    this.handleResize();
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('resize', this.updateBreadcrumb.bind(this));
-  }
-
-  updateBreadcrumb() {
-    const breadcrumb = this.breadcrumbLinks.slice();
-    const breadcrumbWidth = this.getBreadcrumbWidth();
-    let visibleWidth = 0;
-
-    this.visibleItems = [];
-    this.hiddenItems = [];
-
-    while (breadcrumb.length > 0) {
-      const item = breadcrumb.shift();
-      visibleWidth += this.getItemWidth(item);
-      if (visibleWidth < breadcrumbWidth) {
-        this.visibleItems.push(item);
-      } else {
-        this.hiddenItems.push(item);
-      }
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
     }
   }
 
-  getItemWidth(item: BreadcrumbLink): number {
-    const element = document.createElement('span');
-    element.innerText = item.label;
-    element.style.visibility = 'hidden';
-    element.style.position = 'absolute';
-    element.style.top = '-9999px';
-    element.style.left = '-9999px';
-    document.body.appendChild(element);
-    const width = element.offsetWidth;
-    document.body.removeChild(element);
-    return width;
+  private handleResize(): void {
+    const breadcrumbLinks: HTMLElement[] =
+      this.breadcrumbContainer.nativeElement.querySelectorAll('a');
+    const breadcrumbContainerWidth: number =
+      this.breadcrumbContainer.nativeElement.offsetWidth;
+    let totalLinkWidth: number = 0;
+    let visibleLinks: BreadcrumbLink[] = [];
+    let hiddenLinks: BreadcrumbLink[] = [];
+
+    for (const breadcrumbLink of this.breadcrumbLinks) {
+      const linkWidth: number = this.measureLinkWidth(breadcrumbLink.label);
+      if (totalLinkWidth + linkWidth > breadcrumbContainerWidth) {
+        hiddenLinks.push(breadcrumbLink);
+      } else {
+        visibleLinks.push(breadcrumbLink);
+        totalLinkWidth += linkWidth;
+      }
+    }
+
+    this.visibleLinks = visibleLinks;
+    this.hiddenLinks = hiddenLinks;
   }
 
-  getBreadcrumbWidth(): number {
-    const breadcrumb = document.getElementsByClassName('breadcrumb')[0];
-    return breadcrumb ? (breadcrumb as any)?.offsetWidth : 0;
+  private measureLinkWidth(label: string): number {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    context.font = '14px Arial';
+    return context.measureText(label).width;
   }
 }
 
