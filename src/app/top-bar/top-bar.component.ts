@@ -115,9 +115,42 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
   }
 
   private _measureLinkWidth(label: string): number {
+    // const linkElement = document.createElement('a');
+    // const styles = getComputedStyle(this.breadcrumbContainer.nativeElement);
+    // // linkElement.style = styles;
+    // linkElement.textContent = label;
+    // linkElement.style.position = 'absolute';
+    // document.body.appendChild(linkElement);
+    // const width = linkElement.clientWidth;
+    // const newContent = document.createTextNode(label);
+    // document.body.removeChild(linkElement);
+    // return width;
+
+    /////////////////////////////. this works:
+
+    // const span = document.createElement('a');
+    // span.innerText = label;
+    // span.style.position = 'absolute';
+    // span.style.top = '-1000px';
+    // span.style.left = '-1000px';
+    // document.body.appendChild(span);
+    // const width = span.offsetWidth;
+    // document.body.removeChild(span);
+    // return width;
+
+    /////////////////////////////. this works:
+
+    console.log(
+      'asd',
+      this.breadcrumbContainer.nativeElement as HTMLDivElement
+    );
+    //  getComputedStyle(element)
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
-    context.font = "16px 'Roboto', Arial, sans-serif";
+    // TODO get link
+    const styles = getComputedStyle(this.breadcrumbContainer.nativeElement);
+    // context.font = "12px 'Roboto', Arial, sans-serif";
+    context.font = styles.font;
     canvas.remove();
     console.log(context.measureText(label).width);
     return context.measureText(label).width;
