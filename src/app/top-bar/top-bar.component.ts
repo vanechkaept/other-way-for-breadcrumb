@@ -97,6 +97,8 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
     visibleLinks.unshift(homeLink);
     visibleLinks.push(currentLink);
 
+    console.log(this.visibleLinks);
+    console.log(this.hiddenLinks);
     this.visibleLinks = visibleLinks;
     this.hiddenLinks = hiddenLinks;
   }
