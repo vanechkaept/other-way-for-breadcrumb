@@ -37,10 +37,16 @@ interface BreadcrumbLink {
 export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
   @Input() breadcrumbLinks = BR;
 
-  @ViewChild('breadcrumbContainer', { static: true })
+  @ViewChild('breadcrumbContainer', { static: false })
   breadcrumbContainer: ElementRef;
 
   private resizeSubscription: Subscription;
+
+  private _width$ = new BehaviorSubject<number>(0);
+  // todo use in the future
+  private _observer: ResizeObserver = new ResizeObserver((entries) => {
+    this._width$.next(entries[0].contentRect.width);
+  });
 
   visibleLinks: BreadcrumbLink[] = [];
   hiddenLinks: BreadcrumbLink[] = [];
@@ -48,6 +54,7 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
   constructor() {}
 
   ngAfterViewInit(): void {
+    this._observer.observe(this.breadcrumbContainer.nativeElement);
     this.resizeSubscription = fromEvent(window, 'resize')
       .pipe(debounceTime(100), distinctUntilChanged())
       .subscribe(() => this.handleResize());
@@ -61,16 +68,21 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
   }
 
   private handleResize(): void {
-    const breadcrumbLinks: HTMLElement[] =
-      this.breadcrumbContainer.nativeElement.querySelectorAll('a');
     const breadcrumbContainerWidth: number =
       this.breadcrumbContainer.nativeElement.offsetWidth;
-    let totalLinkWidth: number = 0;
+
+    const breadcrumbLinks = this.breadcrumbLinks.slice();
+    const homeLink = breadcrumbLinks.splice(0, 1)[0];
+    const currentLink = breadcrumbLinks.splice(-1)[0];
+    let totalLinkWidth: number =
+      this.measureLinkWidth(homeLink.label) +
+      this.measureLinkWidth(currentLink.label);
     let visibleLinks: BreadcrumbLink[] = [];
     let hiddenLinks: BreadcrumbLink[] = [];
 
-    for (const breadcrumbLink of this.breadcrumbLinks) {
+    for (const breadcrumbLink of breadcrumbLinks.reverse()) {
       const linkWidth: number = this.measureLinkWidth(breadcrumbLink.label);
+      // console.log(`${breadcrumbLink.label}`, linkWidth);
       if (totalLinkWidth + linkWidth > breadcrumbContainerWidth) {
         hiddenLinks.push(breadcrumbLink);
       } else {
@@ -78,6 +90,12 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
         totalLinkWidth += linkWidth;
       }
     }
+    // reverse because before thats we reverse all breadcrumbLinks array
+    visibleLinks.reverse();
+    hiddenLinks.reverse();
+    // dont forget push this
+    visibleLinks.unshift(homeLink);
+    visibleLinks.push(currentLink);
 
     this.visibleLinks = visibleLinks;
     this.hiddenLinks = hiddenLinks;
@@ -86,7 +104,8 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
   private measureLinkWidth(label: string): number {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
-    context.font = '14px Arial';
+    context.font = "16px 'Roboto', Arial, sans-serif";
+    canvas.remove();
     return context.measureText(label).width;
   }
 }
