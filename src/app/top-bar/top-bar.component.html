@@ -1,9 +1,10 @@
-<div class="breadcrumb-container" #breadcrumbContainer>
-  <ng-container *ngIf="breadcrumbsData$ | async as data">
-    <a>
-      {{ data.homeLink.label }}
-    </a>
-    <ng-container  #moreButtonContainer>
+<nav>
+  <div class="breadcrumb__container" #breadcrumbContainer>
+    <ng-container *ngIf="breadcrumbsData$ | async as data">
+      <a>
+        {{ data.homeLink.label }}
+      </a>
+      <!-- <ng-container  #moreButtonContainer>
     <button
         *ngIf="data.hiddenLinks.length"
         mat-icon-button
@@ -18,17 +19,10 @@
       <button *ngFor="let breadcrumbLink of data.hiddenLinks" mat-menu-item>
         {{ breadcrumbLink.label }}
       </button>
-    </mat-menu>
-    <a *ngFor="let breadcrumbLink of data.visibleLinks">{{
-      breadcrumbLink.label
-    }}</a>
-    <!-- <div class="breadcrumb-more" *ngIf="hiddenLinks.length > 0">
-    <button mat-icon-button [matMenuTriggerFor]="moreMenu">
-      <mat-icon>more_horiz</mat-icon>
-    </button>
-    <mat-menu #moreMenu="matMenu">
-      <button mat-menu-item *ngFor="let breadcrumbLink of hiddenLinks" [href]="breadcrumbLink.url">{{breadcrumbLink.label}}</button>
-    </mat-menu>
-  </div> -->
-  </ng-container>
-</div>
+    </mat-menu> -->
+      <a *ngFor="let breadcrumbLink of data.visibleLinks">{{
+        breadcrumbLink.label
+      }}</a>
+    </ng-container>
+  </div>
+</nav>

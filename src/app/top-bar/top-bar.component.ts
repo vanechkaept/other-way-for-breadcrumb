@@ -81,6 +81,7 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
     const breadcrumbLinks = this.breadcrumbLinks.slice();
     const homeLink = breadcrumbLinks.splice(0, 1)[0];
     const currentLink = breadcrumbLinks.splice(-1)[0];
+    // TODO: add abitity to calculate homeLink icon and more icon
     let totalLinkWidth: number =
       this._measureLinkWidth(homeLink.label) +
       this._measureLinkWidth(currentLink.label);
@@ -89,7 +90,6 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
 
     for (const breadcrumbLink of breadcrumbLinks.reverse()) {
       const linkWidth: number = this._measureLinkWidth(breadcrumbLink.label);
-      // console.log(`${breadcrumbLink.label}`, linkWidth);
       if (totalLinkWidth + linkWidth > breadcrumbContainerWidth) {
         hiddenLinks.push(breadcrumbLink);
       } else {
