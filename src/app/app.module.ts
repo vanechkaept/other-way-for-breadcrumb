@@ -6,13 +6,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './top-bar/top-bar.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { MatMenuModule } from '@angular/material/menu';
 import {
   MatButton,
   MatIcon,
   MatIconModule,
   MatButtonModule,
 } from '@angular/material';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -22,6 +22,8 @@ import {
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    MatMenuModule,
+    
   ],
   declarations: [AppComponent, BreadcrumbComponent, ProductListComponent],
   bootstrap: [AppComponent],
