@@ -40,6 +40,8 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('currentLink', { static: false })
   currentElement: ElementRef;
 
+  readonly seperateIcon = 'arrow_forward_ios';
+
   // @ViewChild('moreButtonContainer', { static: false })
   // moreButtonContainer: ElementRef;
 
@@ -52,7 +54,6 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   private _observer: ResizeObserver = new ResizeObserver((entries) => {
     this._width$.next(entries[0].contentRect.width);
     // update
-    setTimeout(() => this._cd.detectChanges(), 100);
   });
 
   constructor(private _cd: ChangeDetectorRef) {}
@@ -64,7 +65,8 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
       debounceTime(100),
       distinctUntilChanged(),
       // startWith(1000),
-      map((width: number) => this._handleResize(width))
+      map((width: number) => this._handleResize(width)),
+      tap((_) => this._cd.markForCheck())
     );
     this._observer.observe(this.breadcrumbContainer.nativeElement);
 

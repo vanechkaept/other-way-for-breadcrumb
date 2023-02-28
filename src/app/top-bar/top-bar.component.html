@@ -4,13 +4,13 @@
       <a class="breadcrumb_label">
         {{ breadcrumbLinks[0].label }}
       </a>
-      <mat-icon>arrow_forward_ios</mat-icon>
+      <mat-icon>{{ seperateIcon }}</mat-icon>
     </li>
     <ng-container *ngIf="breadcrumbsData$ | async as data">
       <!-- <li *ngIf="data.hiddenLinks.length" [matMenuTriggerFor]="menu">...</li> -->
       <li *ngIf="data.hiddenLinks.length">
         <a class="breadcrumb_label">...</a>
-        <mat-icon>arrow_forward_ios</mat-icon>
+        <mat-icon>{{ seperateIcon }}</mat-icon>
       </li>
       <mat-menu #menu="matMenu">
         <button *ngFor="let breadcrumbLink of data.hiddenLinks" mat-menu-item>
@@ -21,7 +21,7 @@
         <a class="breadcrumb_label">
           {{ breadcrumbLink.label }}
         </a>
-        <mat-icon>arrow_forward_ios</mat-icon>
+        <mat-icon>{{ seperateIcon }}</mat-icon>
       </li>
     </ng-container>
     <li #currentLink>
