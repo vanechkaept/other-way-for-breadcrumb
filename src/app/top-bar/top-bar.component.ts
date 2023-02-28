@@ -131,6 +131,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
 
+  // check performance
   private _measureLinkWidth(label: string): number {
     const el = this.homeElement.nativeElement.cloneNode(true);
     el.firstChild.innerHTML = label;
