@@ -1,7 +1,9 @@
 <nav>
   <ul class="breadcrumb__container" #breadcrumbContainer>
     <li #homeLink>
-      <a class="breadcrumb_label"> </a>
+      <a class="breadcrumb_label">
+        <mat-icon *ngIf="homeCrumb">home</mat-icon>
+      </a>
       <div class="breadcrumb_separator">
         <mat-icon>{{ seperateIcon }}</mat-icon>
       </div>
@@ -9,7 +11,7 @@
     <ng-container *ngIf="breadcrumbsData$ | async as data">
       <!-- <li *ngIf="data.hiddenLinks.length" [matMenuTriggerFor]="menu">...</li> -->
       <li *ngIf="data.hiddenLinks.length">
-        <a class="breadcrumb_label">...</a>
+        <a class="breadcrumb_label">{{ menuText }}</a>
         <div class="breadcrumb_separator">
           <mat-icon>{{ seperateIcon }}</mat-icon>
         </div>

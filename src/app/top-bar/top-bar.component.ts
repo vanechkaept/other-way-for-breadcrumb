@@ -43,6 +43,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   currentElement: ElementRef;
 
   readonly seperateIcon = 'arrow_forward_ios';
+  readonly menuText = '...';
 
   breadcrumbsData$: Observable<BreadcrumnPrepareData>;
 
@@ -101,7 +102,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
       ) + totalLinkWidth;
 
     if (breadcrumbContainerWidth < addLinkWidth) {
-      const moreButtonWidth = this._measureLinkWidth('...');
+      const moreButtonWidth = this._measureLinkWidth(this.menuText);
       // console.log('moreButtonWidth', moreButtonWidth);
       totalLinkWidth += moreButtonWidth;
     }
