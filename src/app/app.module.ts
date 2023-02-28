@@ -12,7 +12,7 @@ import {
   MatIconModule,
   MatButtonModule,
 } from '@angular/material';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   imports: [
@@ -23,7 +23,6 @@ import {MatMenuModule} from '@angular/material/menu';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    
   ],
   declarations: [AppComponent, BreadcrumbComponent, ProductListComponent],
   bootstrap: [AppComponent],

@@ -76,7 +76,7 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
 
     // const moreButtonContainerWidth: number =
     //   this.moreButtonContainer.nativeElement.offsetWidth;
-    console.log('----', this.moreButtonContainer?.nativeElement);
+    // console.log('----', this.moreButtonContainer?.nativeElement );
 
     const breadcrumbLinks = this.breadcrumbLinks.slice();
     const homeLink = breadcrumbLinks.splice(0, 1)[0];
@@ -85,6 +85,21 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
     let totalLinkWidth: number =
       this._measureLinkWidth(homeLink.label) +
       this._measureLinkWidth(currentLink.label);
+
+    // icluded more button width to calculate all total width
+    const moreButtonWidth = 20;
+    const addLinkWidth: number =
+      breadcrumbLinks.reduce(
+        (acc, curr) => (acc += this._measureLinkWidth(curr.label)),
+        0
+      ) +
+      this._measureLinkWidth(homeLink.label) +
+      this._measureLinkWidth(currentLink.label);
+    console.log('totalLinkWidth', addLinkWidth);
+
+    if (breadcrumbContainerWidth < addLinkWidth) {
+      totalLinkWidth += moreButtonWidth;
+    }
     const visibleLinks: BreadcrumbLink[] = [];
     const hiddenLinks: BreadcrumbLink[] = [];
 
@@ -140,10 +155,10 @@ export class BreadcrumbComponent implements OnDestroy, AfterViewInit {
 
     /////////////////////////////. this works:
 
-    console.log(
-      'asd',
-      this.breadcrumbContainer.nativeElement as HTMLDivElement
-    );
+    // console.log(
+    //   'asd',
+    //   this.breadcrumbContainer.nativeElement as HTMLDivElement
+    // );
     //  getComputedStyle(element)
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');

@@ -4,6 +4,7 @@
       <a>
         {{ data.homeLink.label }}
       </a>
+      <a *ngIf="data.hiddenLinks.length" [matMenuTriggerFor]="menu">...</a>
       <!-- <ng-container  #moreButtonContainer>
     <button
         *ngIf="data.hiddenLinks.length"
@@ -13,13 +14,13 @@
       >
         <mat-icon>more_vert</mat-icon>
       </button>
-    </ng-container>
+    </ng-container> -->
 
-    <mat-menu #menu="matMenu">
-      <button *ngFor="let breadcrumbLink of data.hiddenLinks" mat-menu-item>
-        {{ breadcrumbLink.label }}
-      </button>
-    </mat-menu> -->
+      <mat-menu #menu="matMenu">
+        <button *ngFor="let breadcrumbLink of data.hiddenLinks" mat-menu-item>
+          {{ breadcrumbLink.label }}
+        </button>
+      </mat-menu>
       <a *ngFor="let breadcrumbLink of data.visibleLinks">{{
         breadcrumbLink.label
       }}</a>
