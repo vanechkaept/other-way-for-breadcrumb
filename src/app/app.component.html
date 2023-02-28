@@ -3,7 +3,9 @@
 <div class="container">
   <router-outlet></router-outlet>
 </div> -->
-<app-breadcrumb></app-breadcrumb>
+<app-breadcrumb [homeCrumb]="homeCrumb"></app-breadcrumb>
+
+<button (click)="homeCrumb = !homeCrumb">show/hide homeCrumb</button>
 
 <!-- 
 Copyright Google LLC. All Rights Reserved.
