@@ -82,7 +82,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     const breadcrumbContainerWidth: number = width;
 
     const breadcrumbLinks = this.breadcrumbLinks.slice();
-    const homeLink = breadcrumbLinks.splice(0, 1)[0];
+    // const homeLink = breadcrumbLinks.splice(0, 1)[0];
     // const homeLinkWidth: number = this._measureLinkWidth(homeLink.label);
     const homeLinkWidth = this.homeElement.nativeElement.offsetWidth;
     console.log('homeLinkWidth', homeLinkWidth);
@@ -127,7 +127,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
       visibleLinks,
       hiddenLinks,
       currentLink,
-      homeLink,
+      // homeLink,
     };
   }
 
@@ -157,23 +157,19 @@ interface BreadcrumnPrepareData {
 
 const BR: BreadcrumbLink[] = [
   {
-    label: 'Home',
-    url: '1',
-  },
-  {
-    label: '2 second asdas 2 second asdas  ',
+    label: 'components (2)',
     url: '2',
   },
   {
-    label: '3 third ss asdasd as',
+    label: 'button (3)',
     url: '3',
   },
   {
-    label: '4 fourd q2213 asd',
+    label: 'api (4)',
     url: '4',
   },
   {
-    label: 'current',
+    label: 'data',
     url: '5',
   },
 ];
