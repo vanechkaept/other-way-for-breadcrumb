@@ -26,7 +26,7 @@ import {
   selector: 'app-breadcrumb',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() breadcrumbLinks = BR;
@@ -54,6 +54,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   private _observer: ResizeObserver = new ResizeObserver((entries) => {
     this._width$.next(entries[0].contentRect.width);
     // update
+    setTimeout(() => this._cd.detectChanges(), 200);
   });
 
   constructor(private _cd: ChangeDetectorRef) {}
@@ -65,8 +66,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
       debounceTime(100),
       distinctUntilChanged(),
       // startWith(1000),
-      map((width: number) => this._handleResize(width)),
-      tap((_) => this._cd.markForCheck())
+      map((width: number) => this._handleResize(width))
     );
     this._observer.observe(this.breadcrumbContainer.nativeElement);
 
