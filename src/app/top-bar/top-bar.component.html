@@ -31,3 +31,12 @@
     </li>
   </ul>
 </nav>
+
+<ul class="breadcrumb__container">
+  <li *ngFor="let breadcrumbLink of breadcrumbLinks">
+    <a class="breadcrumb_label">
+      {{ breadcrumbLink.label }}
+    </a>
+    <mat-icon>{{ seperateIcon }}</mat-icon>
+  </li>
+</ul>

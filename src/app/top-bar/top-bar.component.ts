@@ -43,11 +43,6 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
 
   readonly seperateIcon = 'arrow_forward_ios';
 
-  // @ViewChild('moreButtonContainer', { static: false })
-  // moreButtonContainer: ElementRef;
-
-  private resizeSubscription: Subscription;
-
   breadcrumbsData$: Observable<BreadcrumnPrepareData>;
 
   private _width$ = new BehaviorSubject<number>(0);
@@ -76,17 +71,9 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
       map((width: number) => this._handleResize(width))
     );
     this._observer.observe(this.breadcrumbContainer.nativeElement);
-
-    // this.resizeSubscription = fromEvent(window, 'resize')
-    //   .pipe(debounceTime(100), distinctUntilChanged())
-    //   .subscribe(() => this.handleResize());
-    // this.handleResize();
   }
 
   ngOnDestroy(): void {
-    // if (this.resizeSubscription) {
-    //   this.resizeSubscription.unsubscribe();
-    // }
     this._observer.unobserve(this.breadcrumbContainer.nativeElement);
   }
 
@@ -147,7 +134,6 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     const el = this.homeElement.nativeElement.cloneNode(true);
     el.firstChild.innerHTML = label;
     document.body.appendChild(el);
-    console.log('------------', el.offsetWidth);
     const width = el.offsetWidth;
     document.body.removeChild(el);
     return width;
@@ -174,15 +160,15 @@ const BR: BreadcrumbLink[] = [
     url: '1',
   },
   {
-    label: '2 second asdas  ',
+    label: '2 second asdas 2 second asdas  ',
     url: '2',
   },
   {
-    label: '3 third ss',
+    label: '3 third ss asdasd as',
     url: '3',
   },
   {
-    label: '4 fourd ',
+    label: '4 fourd q2213 asd',
     url: '4',
   },
   {
