@@ -11,6 +11,7 @@ import {
   TemplateRef,
   ViewChildren,
   ChangeDetectionStrategy,
+  NgZone,
 } from '@angular/core';
 import { Subscription, fromEvent, BehaviorSubject, Observable } from 'rxjs';
 import {
@@ -50,14 +51,20 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   breadcrumbsData$: Observable<BreadcrumnPrepareData>;
 
   private _width$ = new BehaviorSubject<number>(0);
+
   // todo use in the future
   private _observer: ResizeObserver = new ResizeObserver((entries) => {
-    this._width$.next(entries[0].contentRect.width);
-    // update
-    setTimeout(() => this._cd.detectChanges(), 200);
+    /**
+     * ResizeObserver runs outside of the zone. Unfortunately the template is not rerendered and keeps the initial value.
+     * Easily fix that by manually running it in the zone
+     * https://dev.to/christiankohler/how-to-use-resizeobserver-with-angular-9l5
+     */
+    this.zone.run(() => {
+      this._width$.next(entries[0].contentRect.width);
+    });
   });
 
-  constructor(private _cd: ChangeDetectorRef) {}
+  constructor(private _cd: ChangeDetectorRef, private zone: NgZone) {}
 
   ngOnInit() {}
 
@@ -77,9 +84,10 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    if (this.resizeSubscription) {
-      this.resizeSubscription.unsubscribe();
-    }
+    // if (this.resizeSubscription) {
+    //   this.resizeSubscription.unsubscribe();
+    // }
+    this._observer.unobserve(this.breadcrumbContainer.nativeElement);
   }
 
   private _handleResize(width: number): BreadcrumnPrepareData {
