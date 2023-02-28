@@ -26,7 +26,7 @@ import {
   selector: 'app-breadcrumb',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() breadcrumbLinks = BR;
@@ -85,7 +85,8 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const breadcrumbLinks = this.breadcrumbLinks.slice();
     const homeLink = breadcrumbLinks.splice(0, 1)[0];
-    const homeLinkWidth: number = this._measureLinkWidth(homeLink.label);
+    // const homeLinkWidth: number = this._measureLinkWidth(homeLink.label);
+    const homeLinkWidth = this.homeElement.nativeElement.offsetWidth;
     console.log('homeLinkWidth', homeLinkWidth);
     // const breadcrumbLinks = this.breadcrumbLinks.slice();
     const currentLink = breadcrumbLinks.splice(-1)[0];
