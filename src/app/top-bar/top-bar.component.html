@@ -1,29 +1,24 @@
 <nav>
-  <div class="breadcrumb__container" #breadcrumbContainer>
+  <ul class="breadcrumb__container" #breadcrumbContainer>
     <ng-container *ngIf="breadcrumbsData$ | async as data">
-      <a>
-        {{ data.homeLink.label }}
-      </a>
-      <a *ngIf="data.hiddenLinks.length" [matMenuTriggerFor]="menu">...</a>
-      <!-- <ng-container  #moreButtonContainer>
-    <button
-        *ngIf="data.hiddenLinks.length"
-        mat-icon-button
-        [matMenuTriggerFor]="menu"
-        aria-label="Example icon-button with a menu"
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </ng-container> -->
-
+      <li>
+        <a class="breadcrumb_label">
+          {{ data.homeLink.label }}
+        </a>
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </li>
+      <li *ngIf="data.hiddenLinks.length" [matMenuTriggerFor]="menu">...</li>
       <mat-menu #menu="matMenu">
         <button *ngFor="let breadcrumbLink of data.hiddenLinks" mat-menu-item>
           {{ breadcrumbLink.label }}
         </button>
       </mat-menu>
-      <a *ngFor="let breadcrumbLink of data.visibleLinks">{{
-        breadcrumbLink.label
-      }}</a>
+      <li *ngFor="let breadcrumbLink of data.visibleLinks">
+        <a class="breadcrumb_label">
+          {{ breadcrumbLink.label }}
+        </a>
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </li>
     </ng-container>
-  </div>
+  </ul>
 </nav>
