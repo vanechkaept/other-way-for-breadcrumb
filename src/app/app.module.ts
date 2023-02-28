@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BreadcrumbComponent } from './top-bar/top-bar.component';
-import { ProductListComponent } from './product-list/product-list.component';
 import {
   MatButton,
   MatIcon,
@@ -18,13 +17,12 @@ import { MatMenuModule } from '@angular/material/menu';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([{ path: '', component: ProductListComponent }]),
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
   ],
-  declarations: [AppComponent, BreadcrumbComponent, ProductListComponent],
+  declarations: [AppComponent, BreadcrumbComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

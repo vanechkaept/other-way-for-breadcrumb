@@ -31,6 +31,7 @@ import {
 })
 export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() breadcrumbLinks = BR;
+  @Input() homeCrumb = true;
 
   @ViewChild('breadcrumbContainer', { static: false })
   breadcrumbContainer: ElementRef;
@@ -67,7 +68,6 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     this.breadcrumbsData$ = this._width$.pipe(
       debounceTime(100),
       distinctUntilChanged(),
-      // startWith(1000),
       map((width: number) => this._handleResize(width))
     );
     this._observer.observe(this.breadcrumbContainer.nativeElement);
@@ -102,7 +102,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (breadcrumbContainerWidth < addLinkWidth) {
       const moreButtonWidth = this._measureLinkWidth('...');
-      console.log('moreButtonWidth', moreButtonWidth);
+      // console.log('moreButtonWidth', moreButtonWidth);
       totalLinkWidth += moreButtonWidth;
     }
     const visibleLinks: BreadcrumbLink[] = [];
