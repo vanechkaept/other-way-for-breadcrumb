@@ -19,6 +19,7 @@ import {
   map,
   startWith,
   tap,
+  publish,
 } from 'rxjs/operators';
 
 @Component({
@@ -83,12 +84,14 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     const breadcrumbContainerWidth: number = width;
 
     const breadcrumbLinks = this.breadcrumbLinks.slice();
-    const homeLinkWidth: number = this._measureLinkWidth(
-      breadcrumbLinks.splice(0, 1)[0].label
-    );
+    const homeLink = breadcrumbLinks.splice(0, 1)[0];
+    const homeLinkWidth: number = this._measureLinkWidth(homeLink.label);
+    console.log('homeLinkWidth', homeLinkWidth);
     // const breadcrumbLinks = this.breadcrumbLinks.slice();
+    const currentLink = breadcrumbLinks.splice(-1)[0];
     const currentLinkWidth: number =
       this.currentElement.nativeElement.offsetWidth;
+    console.log('currentLinkWidth', currentLinkWidth);
     // TODO: add abitity to calculate homeLink icon and more icon
     let totalLinkWidth: number = homeLinkWidth + currentLinkWidth;
 
@@ -101,6 +104,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (breadcrumbContainerWidth < addLinkWidth) {
       const moreButtonWidth = this._measureLinkWidth('...');
+      console.log('moreButtonWidth', moreButtonWidth);
       totalLinkWidth += moreButtonWidth;
     }
     const visibleLinks: BreadcrumbLink[] = [];
@@ -108,6 +112,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
 
     for (const breadcrumbLink of breadcrumbLinks.reverse()) {
       const linkWidth: number = this._measureLinkWidth(breadcrumbLink.label);
+      console.log(breadcrumbLink.label, linkWidth);
       if (totalLinkWidth + linkWidth > breadcrumbContainerWidth) {
         hiddenLinks.push(breadcrumbLink);
       } else {
@@ -122,7 +127,8 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     return {
       visibleLinks,
       hiddenLinks,
-      currentLink: this.breadcrumbLinks[3],
+      currentLink,
+      homeLink,
     };
   }
 
@@ -130,71 +136,10 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     const el = this.homeElement.nativeElement.cloneNode(true);
     el.firstChild.innerHTML = label;
     document.body.appendChild(el);
-    // console.log(d.offsetWidth);
+    console.log('------------', el.offsetWidth);
     const width = el.offsetWidth;
     document.body.removeChild(el);
     return width;
-
-    ///////////////////////////////////
-    // const d = this.homeElement.nativeElement?.copy(true) || null;
-    // d.firstChild.innerHTML = 'label';
-    // console.log(d.offsetWidth);
-    // return d ? d.offsetWidth : 0;
-    // const linkElement = document.createElement('a');
-    // const styles = getComputedStyle(this.breadcrumbContainer.nativeElement);
-    // // linkElement.style = styles;
-    // linkElement.textContent = label;
-    // linkElement.style.position = 'absolute';
-    // document.body.appendChild(linkElement);
-    // const width = linkElement.clientWidth;
-    // const newContent = document.createTextNode(label);
-    // document.body.removeChild(linkElement);
-    // return width;
-    /////////////////////////////. this works:
-    // const span = document.createElement('a');
-    // span.innerText = label;
-    // span.style.position = 'absolute';
-    // span.style.top = '-1000px';
-    // span.style.left = '-1000px';
-    // document.body.appendChild(span);
-    // const width = span.offsetWidth;
-    // document.body.removeChild(span);
-    // return width;
-    /////////////////////////////. this works best:
-    // console.log(
-    //   'asd',
-    //   this.breadcrumbContainer.nativeElement as HTMLDivElement
-    // );
-    //  getComputedStyle(element)
-    // const canvas = document.createElement('canvas');
-    // const context = canvas.getContext('2d');
-    // // TODO get link
-    // const styles = getComputedStyle(this.breadcrumbContainer.nativeElement);
-    // // context.font = "12px 'Roboto', Arial, sans-serif";
-    // context.font = styles.font;
-    // canvas.remove();
-    // // console.log(context.measureText(label).width);
-    // return context.measureText(label).width;
-    /////////////////////////////
-    // const newBlock = document.createElement('a');
-    // const newContent = document.createTextNode(label);
-    // newBlock.appendChild(newContent);
-    // return newBlock.offsetWidth;
-    /////////////////////////////
-    // const link = document.createElement('a');
-    // // Set the text content of the anchor element to the label
-    // link.textContent = label;
-    // // Set the href attribute of the anchor element to #
-    // link.setAttribute('href', '#');
-    // // Add the anchor element to the document body
-    // document.body.appendChild(link);
-    // // Get the width of the anchor element
-    // const blockWidth = link.offsetWidth;
-    // // Remove the anchor element from the document body
-    // document.body.removeChild(link);
-    // console.log(blockWidth);
-    // // Return the block width of the anchor element
-    // return blockWidth;
   }
 }
 
@@ -218,19 +163,19 @@ const BR: BreadcrumbLink[] = [
     url: '1',
   },
   {
-    label: '2 second ',
+    label: '2 second asdas  ',
     url: '2',
   },
   {
-    label: '3 third ',
+    label: '3 third ss',
     url: '3',
   },
   {
-    label: '4 four ',
+    label: '4 fourd ',
     url: '4',
   },
   {
-    label: '5 five ',
+    label: 'current',
     url: '5',
   },
 ];

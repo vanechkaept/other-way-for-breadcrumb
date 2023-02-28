@@ -1,7 +1,12 @@
 <nav>
   <ul class="breadcrumb__container" #breadcrumbContainer>
     <li #homeLink>
-      <a class="breadcrumb_label"> home </a>
+      <a
+        class="breadcrumb_label"
+        *ngIf="(breadcrumbsData$ | async)?.homeLink as homeLink"
+      >
+        {{ homeLink.label }}
+      </a>
       <mat-icon>arrow_forward_ios</mat-icon>
     </li>
     <ng-container *ngIf="breadcrumbsData$ | async as data">
@@ -23,8 +28,11 @@
       </li>
     </ng-container>
     <li #currentLink>
-      <a class="breadcrumb_label">
-        {{ (breadcrumbsData$ | async).currentLink }}
+      <a
+        class="breadcrumb_label"
+        *ngIf="(breadcrumbsData$ | async)?.currentLink as currentLink"
+      >
+        {{ currentLink.label }}
       </a>
     </li>
   </ul>
