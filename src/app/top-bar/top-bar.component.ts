@@ -47,7 +47,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
 
   breadcrumbsData$: Observable<BreadcrumnPrepareData>;
 
-  private _width$ = new BehaviorSubject<number>(0);
+  private _width$ = new BehaviorSubject<number>(1000);
 
   // todo use in the future
   private _observer: ResizeObserver = new ResizeObserver((entries) => {
@@ -63,14 +63,16 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private _cd: ChangeDetectorRef, private zone: NgZone) {}
 
-  ngOnInit() {}
-
-  ngAfterViewInit(): void {
+  ngOnInit() {
     this.breadcrumbsData$ = this._width$.pipe(
       debounceTime(100),
       distinctUntilChanged(),
+      tap((d) => console.log('ddd', d)),
       map((width: number) => this._handleResize(width))
     );
+  }
+
+  ngAfterViewInit(): void {
     this._observer.observe(this.breadcrumbContainer.nativeElement);
   }
 
@@ -116,8 +118,8 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
         hiddenLinks.push(breadcrumbLink);
       } else {
         visibleLinks.push(breadcrumbLink);
-        totalLinkWidth += linkWidth;
       }
+      totalLinkWidth += linkWidth;
     }
     // reverse because before thats we reverse all breadcrumbLinks array
     visibleLinks.reverse();
@@ -162,7 +164,7 @@ const BR: BreadcrumbLink[] = [
     url: '2',
   },
   {
-    label: 'button (3)',
+    label: 'button (3)asd sa das d asd as da sd',
     url: '3',
   },
   {
