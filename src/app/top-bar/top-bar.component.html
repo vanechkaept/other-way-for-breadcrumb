@@ -21,6 +21,9 @@
           {{ breadcrumbLink.label }}
         </button>
       </mat-menu>
+      <!-- <ng-container *ngFor="let breadcrumbLink of data.visibleLinks">
+        <ng-container *ngTemplateOutlet="check"></ng-container>
+      </ng-container> -->
       <li *ngFor="let breadcrumbLink of data.visibleLinks">
         <a class="breadcrumb_label">
           {{ breadcrumbLink.label }}
@@ -48,3 +51,12 @@
     </div>
   </li>
 </ul> -->
+
+<ng-template #check>
+  <li>
+    <a class="breadcrumb_label"> fasdasd </a>
+    <div class="breadcrumb_separator">
+      <mat-icon>{{ seperateIcon }}</mat-icon>
+    </div>
+  </li>
+</ng-template>

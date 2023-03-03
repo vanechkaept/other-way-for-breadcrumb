@@ -39,6 +39,9 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('homeLink', { static: false })
   homeElement: ElementRef;
 
+  @ViewChild('check', { static: false })
+  checkElement: TemplateRef<ElementRef>;
+
   @ViewChild('currentLink', { static: false })
   currentElement: ElementRef;
 
@@ -73,6 +76,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    console.log('checkElement', this.checkElement);
     this._observer.observe(this.breadcrumbContainer.nativeElement);
   }
 
